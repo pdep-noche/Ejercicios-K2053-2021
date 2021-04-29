@@ -1,3 +1,4 @@
+import Text.Show.Functions
 
 siguiente :: Integer -> Integer
 siguiente nro = nro + 1
@@ -17,12 +18,13 @@ mes (_, unMes, _) = unMes
 
 
 calcular' :: (Integer, Integer) -> (Integer, Integer)
-calcular' (nro, otroNum) | even nro && even otroNum = (doble nro, otroNum)
-                          | odd otroNum && odd nro  = (nro , siguiente otroNum)
-                          | even nro && odd otroNum = (doble nro, siguiente otroNum)
-                          | otherwise = (nro, otroNum)
+calcular' (primero, segundo) = (calcularPrimero primero, calcularSegundo segundo)
 
+calcularPrimero primero | even primero = doble primero
+                        | otherwise = primero
 
+calcularSegundo segundo | odd segundo = siguiente segundo
+                        | otherwise = segundo
 
 and' :: Bool -> Bool ->Bool
 and' unBool otroBool | not unBool = False
@@ -55,10 +57,43 @@ cuadruple' nro = (doble . doble) nro
 esMayorA :: Integer -> Bool
 esMayorA nro =  10 < (doble.siguiente)(nro + 2)
 
+suma :: Integer -> Integer -> Integer
+suma x y = x + y
+
+suma' :: (Integer, Integer) -> Integer
+suma' (x, y)  = x + y
 
 
+esParSiguiente :: Integer -> Bool
+esParSiguiente nro = even . siguiente $  nro
+
+esImparSigSumaSiete :: Integer -> Bool
+esImparSigSumaSiete nro = odd.siguiente.suma 7 $ nro
+
+esMayorA' :: Integer -> Bool
+esMayorA' nro = ((>10).doble.siguiente.suma 2) nro
+
+triple :: Integer -> Integer
+triple  = (\nro -> 3 * nro)
+
+siguiente' :: Integer -> Integer
+siguiente' = (\nro -> nro + 1)
+
+suma'' :: Integer -> Integer -> Integer
+suma'' = (\nro otroNum -> nro + otroNum)
+
+sumarDos :: Integer -> Integer
+sumarDos = (\nro -> nro `suma` 2)
 
 
+cabeza (x:_) = x
 
+cola (_:xs) = xs
 
+resto (_:_:_:xs)  = xs
 
+sayHello :: String -> String
+sayHello alguien = "Hello " ++ alguien ++ "!"
+
+primero :: (Integer, Integer, Integer) -> Integer
+primero (x, _, _ ) = x
