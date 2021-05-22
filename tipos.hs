@@ -83,3 +83,6 @@ hierbaMilagrosa unRaton =  foldr  hierbaVerde  unRaton  enfermedadesInfecciosas
 
 hierbaMilagrosa' :: Hierba
 hierbaMilagrosa' unRaton = medicamento (map hierbaVerde enfermedadesInfecciosas) unRaton
+
+-- 4
+cantidadIdeal f = head.filter f $ [1..]
