@@ -86,3 +86,15 @@ hierbaMilagrosa' unRaton = medicamento (map hierbaVerde enfermedadesInfecciosas)
 
 -- 4
 cantidadIdeal f = head.filter f $ [1..]
+
+estanMejoresQueNunca :: [Animal] -> Hierba -> Bool
+estanMejoresQueNunca ratones unMedicamento = all ((<1).peso.unMedicamento) ratones
+
+{-
+estanMejoresQueNunca [cerebro, orejudo] hierbaMilagrosa
+False-}
+
+experimento ratones = cantidadIdeal  (estanMejoresQueNunca ratones.reduceFatFast)
+
+{-*Main> experimento [cerebro, orejudo]
+29 -}
