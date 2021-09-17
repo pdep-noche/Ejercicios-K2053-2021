@@ -1,0 +1,38 @@
+import afecciones.*
+
+
+test "sara sea afectada por la malaria" {
+  
+     sara.esAfectadaPor(malaria)
+	 assert.equals(40, sara.temperatura())
+
+}
+
+test "sara es afectada por varicela" {
+	sara.esAfectadaPor(varicela)
+	assert.equals(85, sara.vitalidad())
+	assert.equals(49.5, sara.peso())
+}
+
+test "sara es afectada por gripe" {
+	sara.esAfectadaPor(gripe)
+	assert.equals(72, sara.vitalidad())
+}
+
+test "sara ingiera una dosis de paracetamol" {
+	sara.temperatura(40)
+	sara.esAfectadaPor(paracetamol)
+	assert.equals(37, sara.temperatura())	
+}
+
+test "sara ingiera 10 gramos de polen" {
+	sara.esAfectadaPor(polen)
+	assert.equals(91, sara.vitalidad())
+}
+
+test "sara consuma una nuez" {
+	sara.esAfectadaPor(nuez)
+	assert.equals(117, sara.vitalidad())
+}
+
+
