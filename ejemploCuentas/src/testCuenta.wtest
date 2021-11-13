@@ -1,0 +1,17 @@
+import cuenta.*
+describe "Tests cuentas" {
+	
+ const unaCuenta  = new Cuenta(saldo = 2000)
+ const otraCuenta = new Cuenta(saldo = 500)
+
+	test "No se pudo realizar la transferencia de unaCuenta a otraCuenta" {
+
+		assert.throwsException({unaCuenta.transferir(2500, otraCuenta)})
+
+	}
+	
+	test "No se pudo realizar la transferencia de otraCuenta a unaCuenta" {
+		
+		assert.throwsExceptionWithType(new DomainException(message = "Saldo insuficiente" ), {otraCuenta.transferir(1000, unaCuenta)})
+	}
+}
