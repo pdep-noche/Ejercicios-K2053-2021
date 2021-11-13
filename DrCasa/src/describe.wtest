@@ -1,0 +1,89 @@
+import objects.*
+describe "temporada 1" {
+	
+	const malaria = new EnfermedadInfecciona(cantidadcelulasAmenazadas = 5000)
+	const otitis = new EnfermedadInfecciona(cantidadcelulasAmenazadas = 1000)
+	const lupus = new EnfermedadAutoinmune(cantidadcelulasAmenazadas = 5000)
+	const otraMalaria = new EnfermedadInfecciona(cantidadcelulasAmenazadas = 80000)
+	const logan = new Persona(cantCelulas = 30000000000, temperatura=37)
+	const frank = new Persona(cantCelulas = 3500000000000, temperatura = 36)
+	const cameron = new Medico(dosis = 100, cantCelulas = 10000000, temperatura = 37)
+	const cuddy = new JefeDeDepartamento(subordinados = #{cameron}, dosis = 80, cantCelulas = 500000, temperatura = 36)
+	
+
+
+method initialize() {
+	
+	logan.contraer(malaria)
+	logan.contraer(otitis)
+	logan.contraer(lupus)
+}
+
+	test "Franck contrae enfermedad" {
+		frank.contraer(otraMalaria)
+		assert.that(frank.tenes(otraMalaria))
+	}
+	
+	test "enfermedad infecciosa reproducir" {
+		malaria.reproducir()
+		assert.equals(10000, malaria.cantidadcelulasAmenazadas())
+	}
+	
+	test "logan vivir un día" {
+		logan.vivirUnDia()
+		assert.equals(43, logan.temperatura())
+		assert.equals(29999995000, logan.cantCelulas())
+	}
+	
+	test "logar vivir 2 días" {
+		logan.vivirUnDia()
+		logan.vivirUnDia()		
+		assert.that(logan.estaEnComa())
+	}
+	
+	test "cant de celulas amenazadas por enf agresivas" {
+		assert.equals(0, logan.cantDeCelulasDeEnfAgresivas())
+	}
+	
+	test "logan enfermedad que más celulas afecte" {
+		
+		assert.equals(lupus, logan.enfermedadQueMasCelulasAfecta())
+	}
+	
+	test "atenuar malaria y atenuar lupus"  {
+		malaria.atenuar(100, logan)
+		lupus.atenuar(500, logan)
+		assert.equals(3500, malaria.cantidadcelulasAmenazadas())
+		assert.equals(0, lupus.cantidadcelulasAmenazadas())
+	}
+	
+	test "cameron atender a logan" {
+		cameron.atenderA(logan)
+		assert.equals(3500, malaria.cantidadcelulasAmenazadas())
+		assert.equals(0, otitis.cantidadcelulasAmenazadas())
+		assert.equals(3500, lupus.cantidadcelulasAmenazadas())
+	}
+	
+	test "cuddy atender a logan" {
+		cuddy.atenderA(logan)
+		assert.equals(3500, malaria.cantidadcelulasAmenazadas())
+		assert.equals(0, otitis.cantidadcelulasAmenazadas())
+		assert.equals(3500, lupus.cantidadcelulasAmenazadas())
+	}
+	
+	test "cameron contraer malaria" {
+		cameron.contraer(malaria)
+		assert.that(cameron.tenes(malaria))
+		assert.equals(3500, malaria.cantidadcelulasAmenazadas())
+	}
+	
+	test "cuddy contraer malaria" {
+		cuddy.contraer(malaria)
+		assert.that(cuddy.tenes(malaria))
+		assert.equals(3500, malaria.cantidadcelulasAmenazadas())
+	}
+	
+	
+
+	
+}
